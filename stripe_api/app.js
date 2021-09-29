@@ -17,7 +17,7 @@ const stripe = require("stripe")("sk_test_mEAzBvDNfGDxoy11kaG1YnKU00DyzEvh14");
 
   console.log(paymentIntent); */
 
-  const charge = await stripe.charges.create({
+ /* const charge = await stripe.charges.create({
     amount: 2000,
     currency: "cad",
     source: "src_1JcjD6KNUWwQibVP52tqMk1j",
@@ -25,5 +25,23 @@ const stripe = require("stripe")("sk_test_mEAzBvDNfGDxoy11kaG1YnKU00DyzEvh14");
     customer: "cus_KHHghY3mPsR7DE",
   });
 
-  console.log(charge);
+  console.log(charge);*/
+
+  /*const charges = await stripe.charges.list({customer:"cus_KHHghY3mPsR7DE", limit:3});
+
+  console.log(charges);*/
+
+  //configure the invoice
+  /*const invoice = await stripe.invoiceItems.create({
+  	amount: 1000,
+  	currency: "cad",
+  	customer: "cus_KHHghY3mPsR7DE",
+  	description: "Invoice set up"
+  });
+
+  console.log(invoice);*/
+
+  const createInvoice = await stripe.invoices.create({customer: "cus_KHHghY3mPsR7DE"});
+
+  console.log(createInvoice)
 })();
