@@ -11,7 +11,6 @@ const PostCreate = () => {
       title,
     });
 
-    //empty the input
     setTitle("");
   };
 
