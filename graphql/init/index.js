@@ -58,7 +58,7 @@ const AuthorType = new GraphQLObjectType({
   }),
 });
 
-const schema = new GraphQLSchema({
+const HelloworldType = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "Helloworld",
     fields: () => ({
@@ -71,10 +71,26 @@ const RootQueryType = new GraphQLObjectType({
   name: "Query",
   description: "Root Query",
   fields: () => ({
+    book: {
+      type: BookType,
+      description: "A single book",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve: (parent, args) => books.find((book) => book.id === args.id),
+    },
     books: {
       type: new GraphQLList(BookType),
       description: "List of Books",
       resolve: () => books,
+    },
+    author: {
+      type: AuthorType,
+      description: "A single author",
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve: (parent, args) => authors.find((author) => author.id == args.id),
     },
     authors: {
       type: new GraphQLList(AuthorType),
@@ -84,8 +100,33 @@ const RootQueryType = new GraphQLObjectType({
   }),
 });
 
+const RootMutationType = new GraphQLObjectType({
+  name: "Mutation",
+  description: "Root mutation",
+  fields: () => ({
+    addBooks: {
+      type: BookType,
+      description: "Add a book",
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        authorId: { type: GraphQLNonNull(GraphQLInt) },
+      },
+      resolve: (parent, args) => {
+        const book = {
+          id: books.length + 1,
+          name: args.name,
+          authorId: args.authorId,
+        };
+        books.push(book);
+        return book;
+      },
+    },
+  }),
+});
+
 const rootSchema = new GraphQLSchema({
   query: RootQueryType,
+  mutation: RootMutationType,
 });
 
 app.use(
