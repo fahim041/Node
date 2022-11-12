@@ -1,11 +1,7 @@
-const {
-  GraphQLObjectType,
-  GraphQLSchema,
-} = require("graphql");
+const { GraphQLObjectType, GraphQLSchema } = require("graphql");
 
-const { ProjectType, ProjectQuery, ProjectMutation } = require("./projectObject");
-const { ClientType, ClientMutation, ClientQuery } = require("./clientObject");
-
+const { ProjectQuery, ProjectMutation } = require("./projectObject");
+const { ClientMutation, ClientQuery } = require("./clientObject");
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQuery",
@@ -19,7 +15,7 @@ const RootMutation = new GraphQLObjectType({
   name: "RootMutation",
   fields: {
     ...ClientMutation,
-    ...ProjectMutation
+    ...ProjectMutation,
   },
 });
 
