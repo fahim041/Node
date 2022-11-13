@@ -1,25 +1,24 @@
-import React from "react";
-import { gql, useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
 
 import ClientRow from "./ClientRow";
-
-const GET_CLIENTS = gql`
-  query getClients {
-    clients {
-      id
-      name
-      email
-      phone
-    }
-  }
-`;
+import { GET_CLIENTS } from "../queries/clientQuery";
+import Spinner from "./Spinner";
+import EditClientModal from "./EditClientModal";
 
 export default function Clients() {
   const { loading, error, data } = useQuery(GET_CLIENTS);
-  if (loading) return <p>Loading...</p>;
+  const [selectedClient, setSelectedClient] = useState({});
+
+  const clientEdit = (client) => {
+    setSelectedClient(client);
+  };
+
+  if (loading) return <Spinner />;
   if (error) return <p>Error...</p>;
   return (
     <>
+      <EditClientModal client={selectedClient} />
       {!loading && !error && (
         <table className="table table-hover mt-3">
           <thead>
@@ -32,7 +31,11 @@ export default function Clients() {
           </thead>
           <tbody>
             {data.clients.map((client) => (
-              <ClientRow key={client.id} client={client} />
+              <ClientRow
+                key={client.id}
+                client={client}
+                clientEdit={clientEdit}
+              />
             ))}
           </tbody>
         </table>
