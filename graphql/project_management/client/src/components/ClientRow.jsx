@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 
 import { DELETE_CLIENT } from "../mutations/clientMutation";
 import { GET_CLIENTS } from "../queries/clientQuery";
-import EditClientModal from "./EditClientModal";
 
 export default function ClientRow({ client, clientEdit }) {
   const [deleteClient] = useMutation(DELETE_CLIENT, {

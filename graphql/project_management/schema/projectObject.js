@@ -74,10 +74,10 @@ const ProjectMutation = {
 
   updateProject: {
     type: ProjectType,
-    args:{
-      id: {type: GraphQLNonNull(GraphQLID)},
-      name: {type: GraphQLString},
-      description: {type: GraphQLString},
+    args: {
+      id: { type: GraphQLNonNull(GraphQLID) },
+      name: { type: GraphQLString },
+      description: { type: GraphQLString },
       status: {
         type: new GraphQLEnumType({
           name: "ProjectStatusUpdate",
@@ -89,19 +89,20 @@ const ProjectMutation = {
         }),
       },
     },
-    resolve: (parent, args)=> {
+    resolve: (parent, args) => {
       return Project.findByIdAndUpdate(
-        args.id,{
+        args.id,
+        {
           $set: {
             name: args.name,
             description: args.description,
-            status: args.status
+            status: args.status,
           },
         },
-        {returnOriginal: false}
-      )
-    }
-  }
+        { returnOriginal: false }
+      );
+    },
+  },
 };
 
 module.exports = { ProjectType, ProjectMutation, ProjectQuery };
