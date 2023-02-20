@@ -14,14 +14,14 @@ connectDB();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send({"message":"Hello world"})
-})
+  res.send({ message: "Hello world" });
+});
 
 app.use(
   "/graphql",
   graphqlHTTP({
     schema,
-    graphiql: process.env.NODE_ENV == "development",
+    graphiql: true,
   })
 );
 
